@@ -1,6 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react';
+import api from '../../api';
 
 const ContactUs = () => {
+    const [formData, setFormData] = useState({
+        fullname: '',
+        emailaddress: '',
+        phone: '',
+        msg: ''
+    });
+    const [status, setStatus] = useState('');
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setStatus('Sending...');
+
+        try {
+            const response = await api.post('/api/contact', formData);
+
+            if (response.status === 200) {
+                setStatus('Message sent successfully!');
+                setFormData({ fullname: '', emailaddress: '', phone: '', msg: '' });
+            } else {
+                setStatus(`Error: ${response.data.message}`);
+            }
+        } catch (error) {
+            setStatus(error.response?.data?.message || 'Error: Could not send message.');
+        }
+    };
+
     return (
         <div>
             <section className="banner-section position-relative">
@@ -86,34 +121,35 @@ const ContactUs = () => {
                         <div className="col-lg-7 col-md-12 col-sm-12 col-xs-12" data-aos="fade-right" data-aos-duration="2000">
                             <div className="contact_info_form_content">
                                 <h4>Send us a Message</h4>
-                                <form method="POST" action="#">
+                                <form onSubmit={handleSubmit}>
                                     <div className="row">
                                         <div className="col-lg-12 col-md-12 col-sm-12">
                                             <div className="form-group mb-0">
-                                                <input type="text" name="fullname" id="name" className="form-control" placeholder="Name:"/>
+                                                <input type="text" name="fullname" id="name" className="form-control" placeholder="Name:" value={formData.fullname} onChange={handleChange} required />
                                             </div>
                                         </div>
                                         <div className="col-lg-12 col-md-12 col-sm-12">
                                             <div className="form-group mb-0">
-                                                <input type="tel" name="phone" id="phonenum" className="form-control" placeholder="Phone:"/>
+                                                <input type="tel" name="phone" id="phonenum" className="form-control" placeholder="Phone:" value={formData.phone} onChange={handleChange} />
                                             </div>
                                         </div>
                                         <div className="col-lg-12 col-md-12 col-sm-12">
                                             <div className="form-group mb-0">
-                                                <input type="email" name="emailaddress" id="emailaddrs" className="form-control" placeholder="Email:"/>
+                                                <input type="email" name="emailaddress" id="emailaddrs" className="form-control" placeholder="Email:" value={formData.emailaddress} onChange={handleChange} required />
                                             </div>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="col-lg-12">
                                             <div className=" form-group mb-0">
-                                                <textarea rows="3" name="msg" id="comment" className="form-control" placeholder="Message:"></textarea>
+                                                <textarea rows="3" name="msg" id="comment" className="form-control" placeholder="Message:" value={formData.msg} onChange={handleChange} required></textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="btn_wrapper">
-                                        <button type="button" name="get_started" id="started" className="default-btn">Submit Now<i className="fa-solid fa-angle-right"></i></button>
+                                        <button type="submit" name="get_started" id="started" className="default-btn">Submit Now<i className="fa-solid fa-angle-right"></i></button>
                                     </div>
+                                    {status && <p className="mt-3">{status}</p>}
                                 </form>
                             </div>
                         </div>

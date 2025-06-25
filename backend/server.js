@@ -27,12 +27,14 @@ const testimonialsRouter = require('./routes/testimonials');
 const internshipsRouter = require('./routes/internships');
 const applicationsRouter = require('./routes/applications');
 const uploadRouter = require('./routes/upload');
+const contactRouter = require('./routes/contact');
 
 app.use('/api/projects', projectsRouter);
 app.use('/api/testimonials', testimonialsRouter);
 app.use('/api/internships', internshipsRouter);
 app.use('/api/applications', applicationsRouter);
 app.use('/api/upload', uploadRouter);
+app.use('/api/contact', contactRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
