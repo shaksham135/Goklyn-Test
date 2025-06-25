@@ -2,35 +2,11 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from 'react-slick';
 
 const Service = () => {
     const location = useLocation();
     const isHomePage = location.pathname === "/";
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 2,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: { slidesToShow: 2, slidesToScroll: 1 },
-            },
-            {
-                breakpoint: 768,
-                settings: { slidesToShow: 1, slidesToScroll: 1 },
-            },
-            {
-                breakpoint: 480,
-                settings: { slidesToShow: 1, slidesToScroll: 1, dots: false },
-            },
-        ],
-    };
 
     return (
         <section className="services_section position-relative">

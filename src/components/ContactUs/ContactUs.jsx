@@ -77,7 +77,7 @@ const ContactUs = () => {
                                         </figure>
                                         <div className="contact_info_box_content_wrapper">
                                             <h5>Phone:</h5>
-                                            <p className="mb-0"><a href="#" className="text-decoration-none">+91 9024466472</a></p>
+                                            <p className="mb-0"><a href="/#" className="text-decoration-none">+91 9024466472</a></p>
                                         </div>
                                     </div>
                                 </div>

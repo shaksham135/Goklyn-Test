@@ -45,7 +45,7 @@ const Footer = () => {
                     </a>
                   </li>
                   <li className="icons hover-effect">
-                    <a href="#" target="blank_">
+                    <a href="/#" target="blank_">
                       <i className="fa-brands fa-github" aria-hidden="true"></i>
                     </a>
                   </li>

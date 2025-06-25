@@ -200,7 +200,7 @@ const Header = () => {
                               </a>
                             </li>
                             <li className="icons hover-effect">
-                              <a href="#">
+                              <a href="/#">
                                 <i
                                   className="fa-brands fa-github"
                                   aria-hidden="true"
