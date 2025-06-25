@@ -6,7 +6,6 @@ import Service from '../components/common/Service'
 import About from '../components/Home/About'
 import WhoWeAre from '../components/common/WhoWeAre'
 import Tastimonial from '../components/common/Tastimonial'
-import Combo from '../components/common/Combo'
 
 const HomePage = () => {
     const [projects, setProjects] = useState([]);
