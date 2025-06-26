@@ -24,8 +24,9 @@ router.post('/', async (req, res) => {
 
   // Set up email data
   const mailOptions = {
-    from: `"${fullname}" <${emailaddress}>`,
+    from: `"Portfolio Contact Form" <${process.env.EMAIL_USER}>`,
     to: process.env.ADMIN_EMAIL || process.env.EMAIL_USER, // Send to the admin's email address
+    replyTo: emailaddress, // Set the user's email as the reply-to address
     subject: 'New Contact Form Submission from Portfolio',
     html: `
       <h2>New Message from your Portfolio Contact Form</h2>
