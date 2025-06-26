@@ -889,6 +889,24 @@ header{
 
 /* Home Page Testimonials Section Style */
 
+.testimonials_box .testimonials_image figure img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+.testimonials_section .slick-prev,
+.testimonials_section .slick-next {
+    top: 40%;
+}
+
+.testimonials_section .slick-slider {
+    margin-bottom: 0;
+}
+
+
 .testimonials_section {
     padding: 145px 0 150px;
     position: relative;

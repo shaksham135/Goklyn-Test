@@ -14,7 +14,7 @@ const Portfolio = ({ projects = [] }) => {
                         projects.map(project => (
                             <div key={project._id} className="service_item col-lg-4 col-md-6 col-sm-12 mb-4">
                                 <div className="border rounded p-4 shadow-lg bg-black text-white h-100" style={{borderRadius : '10px'}}>
-                                    <img src={project.imageUrl} alt={project.title} className="img-fluid mb-3" style={{borderRadius: '5px'}}/>
+                                    {project.photo && <img src={`http://localhost:5000${project.photo}`} alt={project.title} className="img-fluid mb-3" style={{borderRadius: '5px', width: '100%', height: '200px', objectFit: 'cover'}}/>}
                                     <h4 className="mb-3 text-primary">{project.title}</h4>
                                     <p>{project.description}</p>
                                     <div>

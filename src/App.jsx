@@ -14,6 +14,15 @@ import ContactUsPage from './pages/ContactUsPage';
 import ScrollTop from './components/ScrollTop/ScrollTop';
 import CareerPage from './pages/CareerPage';
 import ApplyPage from './pages/ApplyPage';
+import AddTestimonialPage from './pages/AddTestimonialPage';
+import AddProjectPage from './pages/AddProjectPage';
+import AddInternshipPage from './pages/AddInternshipPage';
+import ManageProjectsPage from './pages/ManageProjectsPage';
+import EditProjectPage from './pages/EditProjectPage';
+import ManageInternshipsPage from './pages/ManageInternshipsPage';
+import EditInternshipPage from './pages/EditInternshipPage';
+import ManageTestimonialsPage from './pages/ManageTestimonialsPage';
+import EditTestimonialPage from './pages/EditTestimonialPage';
 
 const AppWrapper = () => {
   useEffect(() => {
@@ -52,6 +61,15 @@ const AppWrapper = () => {
           <Route path='/contact-us' element={<ContactUsPage />} />
           <Route path='/career' element={<CareerPage />} />
           <Route path='/apply/:internshipId' element={<ApplyPage />} />
+          <Route path='/admin/add-testimonial' element={<AddTestimonialPage />} />
+          <Route path='/admin/add-project' element={<AddProjectPage />} />
+          <Route path='/admin/add-internship' element={<AddInternshipPage />} />
+          <Route path='/admin/manage-projects' element={<ManageProjectsPage />} />
+          <Route path='/admin/edit-project/:id' element={<EditProjectPage />} />
+          <Route path='/admin/manage-internships' element={<ManageInternshipsPage />} />
+          <Route path='/admin/edit-internship/:id' element={<EditInternshipPage />} />
+          <Route path='/admin/manage-testimonials' element={<ManageTestimonialsPage />} />
+          <Route path='/admin/edit-testimonial/:id' element={<EditTestimonialPage />} />
          </Routes>
         <Footer />
       </ScrollTop>

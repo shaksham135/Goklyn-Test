@@ -19,6 +19,10 @@ const testimonialSchema = new mongoose.Schema({
         min: 1,
         max: 5
     },
+    photo: {
+        type: String,
+        required: false
+    },
     approved: {
         type: Boolean,
         default: false

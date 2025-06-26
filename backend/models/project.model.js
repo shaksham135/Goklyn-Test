@@ -10,9 +10,9 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    imageUrl: {
+    photo: {
         type: String,
-        required: true
+        required: false
     },
     projectUrl: {
         type: String
