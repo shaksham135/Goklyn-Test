@@ -3,7 +3,7 @@ import api from '../api';
 
 import ProjectBanner from '../components/Projects/ProjectBanner';
 import Portfolio from '../components/common/Portfolio';
-import Tastimonial from '../components/common/Tastimonial';
+import Testimonial from '../components/common/Testimonial';
 import Meet from '../components/common/Meet';
 
 
@@ -38,7 +38,7 @@ const ProjectPage = () => {
                 <Portfolio projects={projects} />
             )}
             
-            <Tastimonial />
+            <Testimonial />
             <Meet />
 
         </>

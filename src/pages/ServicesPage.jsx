@@ -2,7 +2,7 @@ import React from 'react'
 import ServicesBanner from '../components/Services/ServicesBanner'
 import Service from '../components/common/Service'
 import WhoWeAre from '../components/common/WhoWeAre'
-import Tastimonial from '../components/common/Tastimonial'
+import Testimonial from '../components/common/Testimonial'
 // import Meet from '../components/common/Meet'
 
 const ServicesPage = () => {
@@ -11,7 +11,7 @@ const ServicesPage = () => {
         <ServicesBanner/>
         <Service/>
         <WhoWeAre/>
-        <Tastimonial/>
+        <Testimonial/>
         {/* <Meet/> */}
     </div>
   )

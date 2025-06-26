@@ -5,7 +5,7 @@ import Portfolio from '../components/common/Portfolio'
 import Service from '../components/common/Service'
 import About from '../components/Home/About'
 import WhoWeAre from '../components/common/WhoWeAre'
-import Tastimonial from '../components/common/Tastimonial'
+import Testimonial from '../components/common/Testimonial'
 
 const HomePage = () => {
     const [projects, setProjects] = useState([]);
@@ -37,7 +37,7 @@ const HomePage = () => {
             <Service/>
             <About/>
             <WhoWeAre/>
-            <Tastimonial/>
+            <Testimonial/>
             {/* <Combo/> */}
         </div>
     )

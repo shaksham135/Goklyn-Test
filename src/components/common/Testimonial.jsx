@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const Tastimonial = () => {
+const Testimonial = () => {
     const [testimonials, setTestimonials] = useState([]);
 
     useEffect(() => {
@@ -73,7 +73,7 @@ const Tastimonial = () => {
                                     <div className="testimonials_box h-100">
                                         <div className="testimonials_image">
                                             {/* Using a placeholder image for now */}
-                                            <figure className="mb-0"><img src={`/assets/images/testimonial_image${(testimonials.indexOf(testimonial) % 2) + 1}.png`} alt="" className="img-fluid hover-effect" /></figure>
+                                            <figure className="mb-0"><img src={`/assets/images/testimonial_image1.png`} alt="" className="img-fluid hover-effect" /></figure>
                                             <div className="testimonials_image_content_wrappper">
                                                 <p className="person_name">{testimonial.clientName}</p>
                                                 <p className="testimonials_text text-size-16 mb-0">{testimonial.company}</p>
@@ -102,4 +102,4 @@ const Tastimonial = () => {
     );
 };
 
-export default Tastimonial;
+export default Testimonial;
