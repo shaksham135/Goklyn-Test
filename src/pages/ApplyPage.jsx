@@ -20,7 +20,22 @@ const ApplyPage = () => {
     };
 
     const handleFileChange = (e) => {
-        setFormData({ ...formData, resume: e.target.files[0] });
+        const file = e.target.files[0];
+        if (!file) return;
+        // Check file type
+        if (file.type !== 'application/pdf') {
+            setMessage('Only PDF files are allowed.');
+            setFormData({ ...formData, resume: null });
+            return;
+        }
+        // Check file size (2MB = 2 * 1024 * 1024 bytes)
+        if (file.size > 2 * 1024 * 1024) {
+            setMessage('PDF file size must be 2MB or less.');
+            setFormData({ ...formData, resume: null });
+            return;
+        }
+        setMessage('');
+        setFormData({ ...formData, resume: file });
     };
 
     const handleSubmit = async (e) => {
@@ -41,8 +56,7 @@ const ApplyPage = () => {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
 
-            const resumePath = uploadRes.data.filePath;
-            const resumeUrl = `${API_BASE_URL}${resumePath}`;
+            const resumeUrl = uploadRes.data.url; // Use Cloudinary URL directly
 
             setMessage('Submitting application details...');
 
@@ -93,7 +107,16 @@ const ApplyPage = () => {
                                     </div>
                                     <div className="mb-4">
                                         <label htmlFor="resume" className="form-label">Upload Resume (PDF)</label>
-                                        <input type="file" className="form-control" id="resume" name="resume" accept=".pdf" onChange={handleFileChange} required />
+                                        <input
+                                            type="file"
+                                            className="form-control"
+                                            id="resume"
+                                            name="resume"
+                                            accept="application/pdf"
+                                            onChange={handleFileChange}
+                                            disabled={submitting}
+                                            required
+                                        />
                                     </div>
                                     <div className="text-center">
                                         <button type="submit" className="btn btn-primary w-100" disabled={submitting}>

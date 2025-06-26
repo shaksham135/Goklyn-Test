@@ -2,11 +2,10 @@ const router = require('express').Router();
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('../config/cloudinary');
-let Testimonial = require('../models/testimonial.model');
+const Testimonial = require('../models/testimonial.model');
 
-// Configure Cloudinary storage for testimonial images
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
+  cloudinary,
   params: {
     folder: 'goklyn-portfolio/testimonials',
     allowed_formats: ['jpeg', 'jpg', 'png', 'gif'],
@@ -14,8 +13,7 @@ const storage = new CloudinaryStorage({
   },
 });
 
-// Initialize Multer with Cloudinary storage
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
 // --- API ROUTES ---
 
@@ -101,43 +99,35 @@ router.post('/update/:id', upload.single('photo'), async (req, res) => {
 // @desc    Delete a testimonial
 // @access  Private (should be protected)
 router.delete('/:id', async (req, res) => {
-    try {
-        const testimonial = await Testimonial.findById(req.params.id);
-        if (!testimonial) {
-            return res.status(404).json({ msg: 'Testimonial not found' });
-        }
-
-        if (testimonial.photoPublicId) {
-            await cloudinary.uploader.destroy(testimonial.photoPublicId);
-        }
-
-        await Testimonial.findByIdAndDelete(req.params.id);
-        
-        res.json({ msg: 'Testimonial deleted successfully.' });
-
-    } catch (err) {
-        console.error('Error deleting testimonial:', err);
-        res.status(500).json({ msg: 'Server error while deleting testimonial.' });
+  try {
+    const testimonial = await Testimonial.findById(req.params.id);
+    if (!testimonial) {
+      return res.status(404).json({ msg: 'Testimonial not found' });
     }
+    if (testimonial.photoPublicId) {
+      await cloudinary.uploader.destroy(testimonial.photoPublicId);
+    }
+    await Testimonial.findByIdAndDelete(req.params.id);
+    res.json({ msg: 'Testimonial deleted successfully.' });
+  } catch (err) {
+    console.error('Error deleting testimonial:', err);
+    res.status(500).json({ msg: 'Server error while deleting testimonial.' });
+  }
 });
 
 // @route   GET api/testimonials/:id
 // @desc    Get a single testimonial by ID
 // @access  Public
 router.get('/:id', async (req, res) => {
-    try {
-        const testimonial = await Testimonial.findById(req.params.id);
-        if (!testimonial) {
-            return res.status(404).json({ msg: 'Testimonial not found' });
-        }
-        res.json(testimonial);
-    } catch (err) {
-        console.error(err.message);
-        if (err.kind === 'ObjectId') {
-            return res.status(404).json({ msg: 'Testimonial not found' });
-        }
-        res.status(500).send('Server Error');
+  try {
+    const testimonial = await Testimonial.findById(req.params.id);
+    if (!testimonial) {
+      return res.status(404).json({ msg: 'Testimonial not found' });
     }
+    res.json(testimonial);
+  } catch (err) {
+    res.status(500).json({ msg: 'Server error' });
+  }
 });
 
 module.exports = router;

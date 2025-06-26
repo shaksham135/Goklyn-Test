@@ -3,6 +3,7 @@ const router = express.Router();
 const Application = require('../models/application.model');
 const Internship = require('../models/internship.model');
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 
 // Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
@@ -28,6 +29,11 @@ router.post('/', async (req, res) => {
       return res.status(404).json({ msg: 'Internship not found or is no longer open' });
     }
 
+    // Validate resume URL (should be a Cloudinary URL)
+    if (!resume || typeof resume !== 'string' || !resume.startsWith('http') || !resume.includes('cloudinary.com')) {
+      return res.status(400).json({ msg: 'Resume must be uploaded and a valid Cloudinary URL provided.' });
+    }
+
     const newApplication = new Application({
       internship: internshipId,
       name,
@@ -38,7 +44,20 @@ router.post('/', async (req, res) => {
 
     const application = await newApplication.save();
 
-    // --- Email Notification Logic ---
+    // Email Notification Logic with resume attachment
+    let attachments = [];
+    try {
+      // Fetch the PDF as a buffer
+      const pdfResponse = await axios.get(newApplication.resume, { responseType: 'arraybuffer' });
+      attachments.push({
+        filename: `${newApplication.name.replace(/\s+/g, '_')}_Resume.pdf`,
+        content: Buffer.from(pdfResponse.data, 'binary'),
+        contentType: 'application/pdf'
+      });
+    } catch (fetchErr) {
+      console.error('Could not fetch PDF for attachment:', fetchErr);
+      // Continue without attachment if fetch fails
+    }
     const mailOptions = {
       from: `"Goklyn Careers" <${process.env.EMAIL_USER}>`, 
       to: process.env.ADMIN_EMAIL,
@@ -50,9 +69,10 @@ router.post('/', async (req, res) => {
         <p><strong>Applicant Name:</strong> ${newApplication.name}</p>
         <p><strong>Email:</strong> ${newApplication.email}</p>
         <p><strong>Phone:</strong> ${newApplication.phone}</p>
-        <p><strong>Resume:</strong> <a href="${newApplication.resume}">View Resume</a></p>
+        <p><strong>Resume:</strong> <a href="${newApplication.resume}" target="_blank">View Resume</a></p>
         <p>This application was submitted on ${application.appliedAt.toDateString()}.</p>
       `,
+      attachments
     };
 
     try {

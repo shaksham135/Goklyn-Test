@@ -2,11 +2,10 @@ const router = require('express').Router();
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('../config/cloudinary');
-let Project = require('../models/project.model');
+const Project = require('../models/project.model');
 
-// Configure Cloudinary storage for project images
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
+  cloudinary,
   params: {
     folder: 'goklyn-portfolio/projects',
     allowed_formats: ['jpeg', 'jpg', 'png', 'gif'],
@@ -14,8 +13,7 @@ const storage = new CloudinaryStorage({
   },
 });
 
-// Initialize Multer with Cloudinary storage
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
 // --- API ROUTES ---
 

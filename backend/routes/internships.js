@@ -2,11 +2,10 @@ const router = require('express').Router();
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const cloudinary = require('../config/cloudinary');
-let Internship = require('../models/internship.model');
+const Internship = require('../models/internship.model');
 
-// Configure Cloudinary storage for internship images
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
+  cloudinary,
   params: {
     folder: 'goklyn-portfolio/internships',
     allowed_formats: ['jpeg', 'jpg', 'png', 'gif'],
@@ -14,50 +13,35 @@ const storage = new CloudinaryStorage({
   },
 });
 
-// Initialize Multer with Cloudinary storage
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
-// --- API ROUTES ---
-
-// @route   GET api/internships
-// @desc    Get all internships
-// @access  Public
-router.route('/').get((req, res) => {
-    Internship.find().sort({ createdAt: -1 })
-        .then(internships => res.json(internships))
-        .catch(err => res.status(400).json({ msg: 'Error: ' + err }));
+router.get('/', (req, res) => {
+  Internship.find().sort({ createdAt: -1 })
+    .then(internships => res.json(internships))
+    .catch(err => res.status(400).json({ msg: 'Error: ' + err }));
 });
 
-// @route   GET api/internships/:id
-// @desc    Get a single internship by ID
-// @access  Public
-router.route('/:id').get((req, res) => {
-    Internship.findById(req.params.id)
-        .then(internship => res.json(internship))
-        .catch(err => res.status(400).json({ msg: 'Error: ' + err }));
+router.get('/:id', (req, res) => {
+  Internship.findById(req.params.id)
+    .then(internship => res.json(internship))
+    .catch(err => res.status(400).json({ msg: 'Error: ' + err }));
 });
 
-// @route   POST api/internships/add
-// @desc    Add a new internship
-// @access  Private (should be protected)
 router.post('/add', upload.single('photo'), async (req, res) => {
-    try {
-        const { title, description, eligibility, isOpen } = req.body;
-        
-        const newInternship = new Internship({
-            title,
-            description,
-            eligibility,
-            isOpen: isOpen !== undefined ? isOpen : true,
-            photo: req.file ? req.file.path : undefined,
-            photoPublicId: req.file ? req.file.filename : undefined
-        });
-
-        await newInternship.save();
-        res.status(201).json({ msg: 'Internship added successfully!', internship: newInternship });
-
-    } catch (err) {
-        console.error('Error adding internship:', err);
+  try {
+    const { title, description, eligibility, isOpen } = req.body;
+    const newInternship = new Internship({
+      title,
+      description,
+      eligibility,
+      isOpen: isOpen !== undefined ? isOpen : true,
+      photo: req.file ? req.file.path : undefined,
+      photoPublicId: req.file ? req.file.filename : undefined
+    });
+    await newInternship.save();
+    res.status(201).json({ msg: 'Internship added successfully!', internship: newInternship });
+  } catch (err) {
+    console.error('Error adding internship:', err);
         res.status(500).json({ msg: 'Server error while adding internship.' });
     }
 });
