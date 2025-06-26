@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../api';
+import api, { API_BASE_URL } from '../../api';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const BASE_URL = 'http://localhost:5000';
+
 
 const Testimonial = () => {
     const [testimonials, setTestimonials] = useState([]);
@@ -75,7 +75,7 @@ const Testimonial = () => {
                                     <div className="testimonials_box h-100">
                                         <div className="testimonials_image">
                                             {/* Using a placeholder image for now */}
-                                            <figure className="mb-0"><img src={testimonial.photo ? `${BASE_URL}${testimonial.photo}` : `/assets/images/testimonial_image1.png`} alt={testimonial.clientName} className="img-fluid hover-effect" /></figure>
+                                            <figure className="mb-0"><img src={testimonial.photo ? `${API_BASE_URL}${testimonial.photo}` : `/assets/images/testimonial_image1.png`} alt={testimonial.clientName} className="img-fluid hover-effect" /></figure>
                                             <div className="testimonials_image_content_wrappper">
                                                 <p className="person_name">{testimonial.clientName}</p>
                                                 <p className="testimonials_text text-size-16 mb-0">{testimonial.company}</p>
