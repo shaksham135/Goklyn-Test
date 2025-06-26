@@ -21,12 +21,12 @@ const AddInternshipPage = () => {
         }
 
         try {
-            await api.post('/api/internships/add-with-photo', formData, {
+            const response = await api.post('/api/internships/add', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            setMessage('Internship added successfully!');
+            setMessage(response.data.msg);
             // Clear form
             setTitle('');
             setDescription('');

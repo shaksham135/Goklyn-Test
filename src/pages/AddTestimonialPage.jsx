@@ -23,12 +23,12 @@ const AddTestimonialPage = () => {
         }
 
         try {
-            const response = await api.post('/api/testimonials/add-with-photo', formData, {
+            const response = await api.post('/api/testimonials/add', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            setMessage(response.data);
+            setMessage(response.data.msg);
             // Clear form
             setClientName('');
             setCompany('');

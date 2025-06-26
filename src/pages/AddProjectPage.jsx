@@ -23,12 +23,12 @@ const AddProjectPage = () => {
         }
 
         try {
-            const response = await api.post('/api/projects/add-with-photo', formData, {
+            const response = await api.post('/api/projects/add', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            setMessage(response.data);
+            setMessage(response.data.msg);
             // Clear form
             setTitle('');
             setDescription('');
@@ -67,7 +67,7 @@ const AddProjectPage = () => {
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="photo" className="form-label">Featured Photo</label>
-                                    <input type="file" className="form-control" id="photo" onChange={(e) => setPhoto(e.target.files[0])} required />
+                                    <input type="file" className="form-control" id="photo" onChange={(e) => setPhoto(e.target.files[0])} />
                                 </div>
                                 <div className="text-center">
                                     <button type="submit" className="btn btn-primary">Add Project</button>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api, { API_BASE_URL } from '../../api';
+import api from '../../api';
 import { Link } from 'react-router-dom';
 
 const CareerBanner = () => {
@@ -107,7 +107,7 @@ const CareerBanner = () => {
                         internships.map(internship => (
                             <div className="col-md-6 col-lg-4" key={internship._id}>
                                 <div className="card shadow-sm h-100 join d-flex flex-column">
-                                        {internship.photo && <img src={`${API_BASE_URL}${internship.photo}`} alt={internship.title} className="card-img-top" style={{ height: '200px', objectFit: 'cover' }}/>}
+                                        {internship.photo && <img src={internship.photo} alt={internship.title} className="card-img-top" style={{ height: '200px', objectFit: 'cover' }}/>}
                                     <div className="card-body text-start flex-grow-1">
                                         <h5 className="card-title fw-bold text-primary">{internship.title}</h5>
                                         <p className="card-text">{internship.description}</p>

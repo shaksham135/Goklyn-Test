@@ -14,6 +14,10 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    photoPublicId: {
+        type: String,
+        required: false
+    },
     projectUrl: {
         type: String
     },

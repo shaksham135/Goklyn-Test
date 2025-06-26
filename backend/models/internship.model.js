@@ -18,6 +18,10 @@ const internshipSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  photoPublicId: {
+    type: String,
+    required: false
+  },
   isOpen: {
     type: Boolean,
     default: true

@@ -23,6 +23,10 @@ const testimonialSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    photoPublicId: {
+        type: String,
+        required: false
+    },
     approved: {
         type: Boolean,
         default: false
