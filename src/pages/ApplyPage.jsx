@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import api, { API_BASE_URL } from '../api';
+import api from '../api';
 
 const ApplyPage = () => {
     const { internshipId } = useParams();
