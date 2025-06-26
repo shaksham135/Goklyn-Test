@@ -21,7 +21,7 @@ const AddInternshipPage = () => {
         }
 
         try {
-            const response = await api.post('/api/internships/add-with-photo', formData, {
+            await api.post('/api/internships/add-with-photo', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

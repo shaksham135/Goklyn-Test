@@ -46,7 +46,7 @@ const EditProjectPage = () => {
         }
 
         try {
-            const response = await api.post(`/api/projects/update-with-photo/${id}`, formData, {
+            await api.post(`/api/projects/update-with-photo/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
