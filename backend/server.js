@@ -11,7 +11,8 @@ const port = process.env.PORT || 5000;
 // CORS Configuration for Production
 const allowedOrigins = [
     'http://localhost:3000', // For local development
-    'https://goklyn-test.netlify.app' // Deployed frontend URL
+    'https://goklyn-test.netlify.app', // Netlify frontend
+    'https://goklyn-test.onrender.com' // Render backend domain
 ];
 
 const corsOptions = {
