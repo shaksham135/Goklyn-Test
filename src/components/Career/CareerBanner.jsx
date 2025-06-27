@@ -109,7 +109,7 @@ const CareerBanner = () => {
                                 <div className="card shadow-sm h-100 join d-flex flex-column">
                                         {internship.photo && <img src={internship.photo} alt={internship.title} className="card-img-top" style={{ height: '200px', objectFit: 'cover' }}/>}
                                     <div className="card-body text-start flex-grow-1">
-                                        <h5 className="card-title fw-bold text-primary">{internship.title}</h5>
+                                        <h5 className="card-title fw-bold" style={{ color: '#f59e42', textShadow: '0 2px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.08)' }}>{internship.title}</h5>
                                         <p className="card-text">{internship.description}</p>
                                         <h6 class="card-subtitle mb-2 text-white">Eligibility:</h6>
                                         <p className="card-text">{internship.eligibility}</p>

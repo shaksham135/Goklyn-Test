@@ -38,6 +38,17 @@
   color: #fff;
   margin-bottom: 0.75rem;
 }
+
+.text-primary {
+  color: #2563eb !important;
+  font-weight: 700;
+  text-shadow: none;
+}
+.internship-title {
+  color: #f59e42 !important; /* Vibrant orange */
+  font-weight: bold;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.15), 0 1px 2px rgba(0,0,0,0.08);
+}
 .project_card p {
   color: #e0e7ef;
   font-size: 1rem;

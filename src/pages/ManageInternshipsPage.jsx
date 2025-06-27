@@ -42,7 +42,7 @@ const ManageInternshipsPage = () => {
                     internships.map(internship => (
                         <div key={internship._id} className="list-group-item list-group-item-action bg-dark text-white mb-2 border-secondary d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 className="mb-1 text-primary">{internship.title}</h5>
+                                <h5 className="mb-1 internship-title">{internship.title}</h5>
                                 <p className={`mb-1 badge ${internship.isOpen ? 'bg-success' : 'bg-danger'}`}>
                                     {internship.isOpen ? 'Open' : 'Closed'}
                                 </p>
