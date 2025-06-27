@@ -48,7 +48,7 @@ const EditInternshipPage = () => {
         }
 
         try {
-            await api.post(`/api/internships/update/${id}`, formData, {
+            await api.post(`/api/internships/update-with-photo/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

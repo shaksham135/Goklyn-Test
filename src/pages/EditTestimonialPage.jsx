@@ -43,7 +43,7 @@ const EditTestimonialPage = () => {
         }
 
         try {
-            await api.post(`/api/testimonials/update/${id}`, formData, {
+            await api.post(`/api/testimonials/update-with-photo/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
