@@ -31,10 +31,9 @@ const AdminDashboard = () => {
   };
 
   const refreshData = () => {
-    setIsLoading(true);
     // Simulate API call
     setTimeout(() => {
-      setIsLoading(false);
+      // no-op
     }, 500);
   };
 
