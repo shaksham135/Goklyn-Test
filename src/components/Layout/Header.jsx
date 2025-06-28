@@ -13,7 +13,7 @@ const Header = () => {
             <div className="col-xxl-3 col-xl-3 col-lg-3 col-md-3">
               <div className="logo-header">
                 <Link to="/">
-                  <img src="assets/images/logo-1.png" alt="..." height="60" />
+                  <img src="/assets/images/logo-1.png" alt="..." height="60" />
                 </Link>
               </div>
             </div>
@@ -119,7 +119,7 @@ const Header = () => {
                       <div className="toggle_logo">
                         <a href="/">
                           <img
-                            src="assets/images/logo-1.png"
+                            src="/assets/images/logo-1.png"
                             alt="..."
                             height="60"
                           />

@@ -18,11 +18,15 @@ const EditTestimonialPage = () => {
             try {
                 const response = await api.get(`/api/testimonials/${id}`);
                 const testimonial = response.data;
-                setName(testimonial.name);
-                setQuote(testimonial.quote);
-                setCompany(testimonial.company || '');
-                setCurrentPhoto(testimonial.photo);
+                setName((testimonial.name || testimonial.clientName || ''));
+                setQuote((testimonial.quote || testimonial.feedback || ''));
+                setCompany((testimonial.company || ''));
+                setCurrentPhoto(testimonial.photo || testimonial.currentPhoto || '');
             } catch (error) {
+                setName('');
+                setQuote('');
+                setCompany('');
+                setCurrentPhoto('');
                 setMessage('Error fetching testimonial data. A route to get a single testimonial might be needed.');
                 console.error('Fetch error:', error);
             }
@@ -51,8 +55,23 @@ const EditTestimonialPage = () => {
             setMessage('Testimonial updated successfully!');
             setTimeout(() => navigate('/admin/manage-testimonials'), 1500);
         } catch (error) {
-            setMessage(error.response?.data?.msg || 'An error occurred during update');
-            console.error('Update error:', error);
+            if (error.response) {
+                // Log the error response safely
+                console.error('Update error response:', error.response);
+                console.error('Status:', error.response?.status);
+                console.error('StatusText:', error.response?.statusText);
+                console.error('Headers:', error.response?.headers);
+                console.error('Data:', error.response?.data);
+                // Show detailed error to user if available
+                const backendMsg = error.response?.data?.msg || error.response?.data?.error || error.response?.statusText;
+                setMessage(`Error: ${error.response?.status} - ${backendMsg}`);
+            } else if (error.request) {
+                setMessage('No response from server. Please check your connection or backend server.');
+                console.error('Update error request:', error.request);
+            } else {
+                setMessage('An unexpected error occurred during update.');
+                console.error('Update error:', error.message);
+            }
         }
     };
 
@@ -64,18 +83,22 @@ const EditTestimonialPage = () => {
                         <div className="card-body">
                             <h2 className="card-title text-center mb-4">Edit Testimonial</h2>
                             <form onSubmit={handleSubmit}>
-                                {currentPhoto && <img src={`http://localhost:5000${currentPhoto}`} alt="Current testimonial" className="img-fluid rounded-circle mx-auto d-block mb-3" style={{width: '150px', height: '150px', objectFit: 'cover'}}/>}
+                                {currentPhoto ? (
+                  <img src={`http://localhost:5000${currentPhoto}`} alt="Current testimonial" className="img-fluid rounded-circle mx-auto d-block mb-3" style={{width: '150px', height: '150px', objectFit: 'cover'}}/>
+                ) : (
+                  <img src="/assets/images/default-user.png" alt="No testimonial" className="img-fluid rounded-circle mx-auto d-block mb-3" style={{width: '150px', height: '150px', objectFit: 'cover'}}/>
+                )}
                                 <div className="mb-3">
                                     <label htmlFor="name" className="form-label">Name</label>
-                                    <input type="text" className="form-control" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+                                    <input type="text" className="form-control" id="name" value={name || ''} onChange={(e) => setName(e.target.value)} required />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="quote" className="form-label">Quote</label>
-                                    <textarea className="form-control" id="quote" rows="4" value={quote} onChange={(e) => setQuote(e.target.value)} required></textarea>
+                                    <textarea className="form-control" id="quote" rows="4" value={quote || ''} onChange={(e) => setQuote(e.target.value)} required></textarea>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="company" className="form-label">Company / Position</label>
-                                    <input type="text" className="form-control" id="company" value={company} onChange={(e) => setCompany(e.target.value)} />
+                                    <input type="text" className="form-control" id="company" value={company || ''} onChange={(e) => setCompany(e.target.value)} />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="photo" className="form-label">Replace Photo (optional)</label>

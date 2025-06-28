@@ -21,10 +21,19 @@ router.get('/', (req, res) => {
     .catch(err => res.status(400).json({ msg: 'Error: ' + err }));
 });
 
-router.get('/:id', (req, res) => {
-  Internship.findById(req.params.id)
-    .then(internship => res.json(internship))
-    .catch(err => res.status(400).json({ msg: 'Error: ' + err }));
+// @route   GET api/internships/:id
+// @desc    Get a single internship by ID
+// @access  Public
+router.get('/:id', async (req, res) => {
+  try {
+    const internship = await Internship.findById(req.params.id);
+    if (!internship) {
+      return res.status(404).json({ msg: 'Internship not found' });
+    }
+    res.json(internship);
+  } catch (err) {
+    res.status(500).json({ msg: 'Server error' });
+  }
 });
 
 router.post('/add', upload.single('photo'), async (req, res) => {
@@ -43,6 +52,43 @@ router.post('/add', upload.single('photo'), async (req, res) => {
   } catch (err) {
     console.error('Error adding internship:', err);
         res.status(500).json({ msg: 'Server error while adding internship.' });
+    }
+});
+
+// @route   POST api/internships/update-with-photo/:id
+// @desc    Update an internship (with/without new photo) - for React admin update form
+// @access  Private (should be protected)
+router.post('/update-with-photo/:id', upload.single('photo'), async (req, res) => {
+    try {
+        const internship = await Internship.findById(req.params.id);
+        if (!internship) {
+            return res.status(404).json({ msg: 'Internship not found' });
+        }
+
+        // If a new photo is uploaded, delete the old one from Cloudinary and update fields
+        if (req.file) {
+            if (internship.photoPublicId) {
+                await cloudinary.uploader.destroy(internship.photoPublicId);
+            }
+            internship.photo = req.file.path;
+            internship.photoPublicId = req.file.filename;
+        }
+
+        // Update other fields
+        const { title, description, eligibility, isOpen } = req.body;
+        internship.title = title || internship.title;
+        internship.description = description || internship.description;
+        internship.eligibility = eligibility || internship.eligibility;
+        if (isOpen !== undefined) {
+            internship.isOpen = isOpen;
+        }
+
+        await internship.save();
+        res.json({ msg: 'Internship updated successfully', internship });
+
+    } catch (err) {
+        console.error('Error updating internship:', err);
+        res.status(500).json({ msg: 'Server error while updating internship.' });
     }
 });
 

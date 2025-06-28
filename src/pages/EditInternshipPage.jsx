@@ -17,17 +17,21 @@ const EditInternshipPage = () => {
     useEffect(() => {
         const fetchInternship = async () => {
             try {
-                // This route needs to be created if it doesn't exist
-                const response = await api.get(`/api/internships/${id}`); 
+                const response = await api.get(`/api/internships/${id}`);
                 const internship = response.data;
-                setTitle(internship.title);
-                setDescription(internship.description);
-                setEligibility(internship.eligibility);
-                setIsOpen(internship.isOpen);
-                setCurrentPhoto(internship.photo);
+                console.log('Fetched internship:', internship);
+                setTitle(internship.title || '');
+                setDescription(internship.description || '');
+                setEligibility(internship.eligibility || '');
+                setIsOpen(typeof internship.isOpen === 'boolean' ? internship.isOpen : true);
+                setCurrentPhoto(internship.photo || '');
             } catch (error) {
-                // Need to add a GET by ID route to internships.js
-                setMessage('Error fetching internship data. Note: A route to get a single internship might be needed.');
+                setTitle('');
+                setDescription('');
+                setEligibility('');
+                setIsOpen(true);
+                setCurrentPhoto('');
+                setMessage('Error fetching internship data. A route to get a single internship might be needed.');
                 console.error('Fetch error:', error);
             }
         };
@@ -56,8 +60,22 @@ const EditInternshipPage = () => {
             setMessage('Internship updated successfully!');
             setTimeout(() => navigate('/admin/manage-internships'), 1500);
         } catch (error) {
-            setMessage(error.response?.data?.msg || 'An error occurred during update');
-            console.error('Update error:', error);
+            if (error.response) {
+                console.error('Update error response:', {
+                    status: error.response.status,
+                    statusText: error.response.statusText,
+                    headers: error.response.headers,
+                    data: error.response.data
+                });
+                const backendMsg = error.response.data?.msg || error.response.data?.error || error.response.statusText;
+                setMessage(`Error: ${error.response.status} - ${backendMsg}`);
+            } else if (error.request) {
+                setMessage('No response from server. Please check your connection or backend server.');
+                console.error('Update error request:', error.request);
+            } else {
+                setMessage('An unexpected error occurred during update.');
+                console.error('Update error:', error.message);
+            }
         }
     };
 
