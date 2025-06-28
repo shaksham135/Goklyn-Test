@@ -89,12 +89,12 @@ const CrudForm = ({ section, item, onSuccess, onCancel }) => {
         } else if (section === 'testimonials') {
           res = await api.post(`/api/testimonials/update-with-photo/${item._id}`, formData);
         } else if (section === 'internships') {
-          res = await api.post(`/api/internships/update-with-photo/${item._id}`, formData);
+          await api.post(`/api/internships/update-with-photo/${item._id}`, formData);
         }
       } else {
         // Add new
         if (section === 'projects') {
-          res = await api.post('/api/projects/add', formData);
+          await api.post(`/api/${section}`, formData);
         } else if (section === 'testimonials') {
           res = await api.post('/api/testimonials/add', formData);
         } else if (section === 'internships') {

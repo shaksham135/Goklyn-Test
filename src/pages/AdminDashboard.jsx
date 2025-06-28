@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiGrid, FiMessageSquare, FiBriefcase, FiPlus, FiRefreshCw, FiMenu, FiX } from 'react-icons/fi';
+import { FiGrid, FiMessageSquare, FiBriefcase, FiRefreshCw, FiMenu, FiX } from 'react-icons/fi';
 import AdminSidebar from '../components/admin/AdminSidebar';
 import CrudTable from '../components/admin/CrudTable';
 
@@ -15,7 +15,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     setShowAnim(true);
   }, [activeSection]);
-  const [isLoading, setIsLoading] = useState(false);
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [formState, setFormState] = useState({
     projects: { show: false, selectedItem: null },

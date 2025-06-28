@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../api';
 import CrudForm from './CrudForm';
-import { FiEdit2, FiTrash2, FiPlus } from 'react-icons/fi';
+
 
 const endpoints = {
   projects: '/api/projects',

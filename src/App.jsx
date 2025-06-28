@@ -59,8 +59,6 @@ const AppWrapper = () => {
 
   const containerClass = pageClasses[location.pathname] || "banner-section-outer";
 
-  const isAdminRoute = location.pathname.startsWith('/admin/dashboard');
-
   return (
     <div className={`${containerClass} position-relative`}>
       <ScrollTop>
