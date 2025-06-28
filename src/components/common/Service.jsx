@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -6,7 +6,39 @@ import "slick-carousel/slick/slick-theme.css";
 const Service = () => {
     const location = useLocation();
     const isHomePage = location.pathname === "/";
+    const servicesHeadingRef = useRef(null);
+    // Always animate on route change to homepage
+    useEffect(() => {
+        const el = servicesHeadingRef.current;
+        if (!el) return;
+        if (location.pathname === '/') {
+            el.classList.remove('services-anim');
+            void el.offsetWidth;
+            el.classList.add('services-anim');
+        }
+    }, [location.pathname]);
 
+    // Animate every time the heading enters the viewport
+    useEffect(() => {
+        const el = servicesHeadingRef.current;
+        if (!el) return;
+        const observer = new window.IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    el.classList.remove('services-anim');
+                    void el.offsetWidth;
+                    el.classList.add('services-anim');
+                } else {
+                    el.classList.remove('services-anim');
+                }
+            },
+            { threshold: 0.5 }
+        );
+        observer.observe(el);
+        return () => {
+            observer.disconnect();
+        };
+    }, []);
 
     return (
         <section className="services_section position-relative">
@@ -15,7 +47,7 @@ const Service = () => {
                     <div className="col-lg-5 col-md-5 col-sm-12 col-12">
                         <div className="services_content">
                             <h6>What We Can Do</h6>
-                            <h2>Services We Can Help You With</h2>
+                            <h2 ref={servicesHeadingRef} className="services-anim">Services We Can Help You With</h2>
                         </div>
                     </div>
                     <div className="col-lg-7 col-md-7 col-sm-12 col-12 d-md-block d-none"></div>
@@ -158,4 +190,17 @@ const Service = () => {
     );
 };
 
+            <style>{`
+                .services-anim {
+                    animation: fadeSlideInServices 0.8s cubic-bezier(.4,0,.2,1);
+                }
+                @keyframes fadeSlideInServices {
+                    0% {
+                        transform: translateY(80px);
+                    }
+                    100% {
+                        transform: translateY(0);
+                    }
+                }
+            `}</style>
 export default Service;

@@ -8,7 +8,7 @@ const WhoWeAre = () => {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-lg-6 col-md-12 col-sm-12 col-12">
-                            <div className="who_we_are_left_content" data-aos="fade-up" data-aos-duration="2000">
+                            <div className="who_we_are_left_content hover-effect">
                                 <h6 className="text-white">Who We ARe</h6>
                                 <h2 className="text-white">
                                     A team of passionate and dedicated individuals

@@ -21,6 +21,9 @@ const projectSchema = new mongoose.Schema({
     projectUrl: {
         type: String
     },
+    githubUrl: {
+        type: String
+    },
     tags: [{
         type: String,
         trim: true

@@ -13,10 +13,11 @@ const Portfolio = ({ projects = [] }) => {
                 <div className="row justify-content-center">
                     {projects.length > 0 ? (
                         projects.map(project => {
-                            // Ensure the project URL is absolute
-                            const absoluteUrl = project.projectUrl && !/^(https?:\/\/)/i.test(project.projectUrl)
-                                ? `https://${project.projectUrl}`
-                                : project.projectUrl;
+                            // Determine primary link for View Project
+                            const githubUrl = project.githubUrl && !/^(https?:\/\/)/i.test(project.githubUrl)
+                                ? `https://${project.githubUrl}`
+                                : project.githubUrl;
+                            const primaryLink = githubUrl || project.projectUrl;
 
                             return (
                                 <div key={project._id} className="service_item col-lg-4 col-md-6 col-sm-12 mb-4">
@@ -29,9 +30,12 @@ const Portfolio = ({ projects = [] }) => {
                                                 <span key={tag} className="badge bg-secondary me-2">{tag}</span>
                                             ))}
                                         </div>
-                                        {project.projectUrl && (
-                                            <div className="btn_wrapper mt-3">
-                                                <a href={absoluteUrl} target="_blank" rel="noopener noreferrer" className="text-decoration-none fw-bold">View Project <i className="fa-solid fa-angle-right"></i></a>
+                                        {primaryLink && (
+                                            <div className="mt-3">
+                                                <a href={primaryLink} target="_blank" rel="noopener noreferrer" 
+                                                   className="btn btn-primary btn-sm" style={{minWidth:'120px'}}>
+                                                    View Project
+                                                </a>
                                             </div>
                                         )}
                                     </div>

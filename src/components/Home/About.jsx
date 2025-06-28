@@ -30,7 +30,7 @@ const About = () => {
                             </div>
                         </div>
                         <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                            <div className="aboutus_content" data-aos="fade-right" data-aos-duration="2000">
+                            <div className="aboutus_content hover-effect">
                                 <h6>About US</h6>
                                 <h2>Empowering Business with AI us</h2>
                                 <p>At GOKLYN Technologies, we are committed to creating an inclusive and innovative ecosystem that fosters learning, collaboration, and technological advancement.</p>

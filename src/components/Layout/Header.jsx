@@ -102,6 +102,22 @@ const Header = () => {
                       contact us
                     </Link>
                   </li>
+                  <li className="nav-item">
+                    <Link
+                      to="/admin/dashboard"
+                      className={`nav-link ${path.startsWith("/admin") ? "active" : ""}`}
+                      style={{
+                        color: '#4f46e5',
+                        fontWeight: '600',
+                        background: 'rgba(79, 70, 229, 0.1)',
+                        borderRadius: '6px',
+                        padding: '8px 16px',
+                        marginLeft: '10px'
+                      }}
+                    >
+                      Admin
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import useAnimateOnView from './components/common/useAnimateOnView';
 import HomePage from './pages/HomePage';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
@@ -23,15 +24,27 @@ import ManageInternshipsPage from './pages/ManageInternshipsPage';
 import EditInternshipPage from './pages/EditInternshipPage';
 import ManageTestimonialsPage from './pages/ManageTestimonialsPage';
 import EditTestimonialPage from './pages/EditTestimonialPage';
+import AdminDashboard from './pages/AdminDashboard';
 
 const AppWrapper = () => {
+  useAnimateOnView();
   useEffect(() => {
     AOS.init({
-      duration: 1000, // values from 100 to 3000, with step 50ms
-      once: true, // whether animation should happen only once - while scrolling down
+      duration: 1000,
+      once: true,
     });
   }, []);
   const location = useLocation();
+
+  // Trigger all .hover-effect elements to animate on every route change
+  useEffect(() => {
+    const els = document.querySelectorAll('.hover-effect');
+    els.forEach(el => {
+      el.classList.remove('hover-effect-animate');
+      void el.offsetWidth;
+      el.classList.add('hover-effect-animate');
+    });
+  }, [location.pathname]);
 
   const pageClasses = {
     "/": "banner-section-outer",
@@ -46,6 +59,7 @@ const AppWrapper = () => {
 
   const containerClass = pageClasses[location.pathname] || "banner-section-outer";
 
+  const isAdminRoute = location.pathname.startsWith('/admin/dashboard');
 
   return (
     <div className={`${containerClass} position-relative`}>
@@ -58,6 +72,7 @@ const AppWrapper = () => {
           <Route path='/faqs' element={<FaqPage />} />
           <Route path='/portfolio' element={<ProjectPage />} />
           <Route path='/our-team' element={<TeamPage />} />
+          <Route path='/admin/dashboard' element={<AdminDashboard />} />
           <Route path='/contact-us' element={<ContactUsPage />} />
           <Route path='/career' element={<CareerPage />} />
           <Route path='/apply/:internshipId' element={<ApplyPage />} />
@@ -70,7 +85,7 @@ const AppWrapper = () => {
           <Route path='/admin/edit-internship/:id' element={<EditInternshipPage />} />
           <Route path='/admin/manage-testimonials' element={<ManageTestimonialsPage />} />
           <Route path='/admin/edit-testimonial/:id' element={<EditTestimonialPage />} />
-         </Routes>
+        </Routes>
         <Footer />
       </ScrollTop>
     </div>

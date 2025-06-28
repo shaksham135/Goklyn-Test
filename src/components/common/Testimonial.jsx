@@ -57,11 +57,11 @@ const Testimonial = () => {
     };
 
     return (
-        <section className="testimonials_section">
+        <section className="testimonials_section position-relative">
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-                        <div className="testimonials_content">
+                        <div className="testimonials_content hover-effect">
                             <h6>Testimonials</h6>
                             <h2>Hear it From Our Clients</h2>
                         </div>

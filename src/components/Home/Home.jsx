@@ -1,7 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import useAnimateOnView from '../common/useAnimateOnView';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+
 const Home = () => {
+    useAnimateOnView();
+    const location = useLocation();
+    useEffect(() => {
+        if (location.pathname === '/') {
+            const els = document.querySelectorAll('.hover-effect');
+            els.forEach(el => {
+                el.classList.remove('hover-effect-animate');
+                void el.offsetWidth;
+                el.classList.add('hover-effect-animate');
+            });
+        }
+    }, [location.pathname]);
     return (
         <div>
             <figure className="banner_top_shape mb-0 position-absolute top_bottom_shape">

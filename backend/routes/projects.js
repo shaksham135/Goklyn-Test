@@ -38,20 +38,23 @@ router.route('/:id').get((req, res) => {
 // @route   POST api/projects/add
 // @desc    Add a new project
 // @access  Private (should be protected)
-router.post('/add', upload.single('photo'), async (req, res) => {
+router.post('/add', upload.fields([{ name: 'photo', maxCount: 1 }]), async (req, res) => {
+    console.log('Received body (add):', req.body);
+    console.log('Received file (add):', req.files);
     try {
-        const { title, description, projectUrl, tags } = req.body;
+        const { title, description, projectUrl, githubUrl, tags } = req.body;
 
         const projectData = {
             title,
             description,
-            projectUrl,
+            projectUrl: projectUrl || '',
+            githubUrl: githubUrl || '',
             tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
         };
 
-        if (req.file) {
-            projectData.photo = req.file.path;
-            projectData.photoPublicId = req.file.filename;
+        if (req.files && req.files.photo && req.files.photo[0]) {
+            projectData.photo = req.files.photo[0].path;
+            projectData.photoPublicId = req.files.photo[0].filename;
         }
         
         const newProject = new Project(projectData);
@@ -68,7 +71,9 @@ router.post('/add', upload.single('photo'), async (req, res) => {
 // @route   POST api/projects/update/:id
 // @desc    Update a project
 // @access  Private (should be protected)
-router.post('/update/:id', upload.single('photo'), async (req, res) => {
+router.post('/update/:id', upload.fields([{ name: 'photo', maxCount: 1 }]), async (req, res) => {
+    console.log('Received body (update):', req.body);
+    console.log('Received file (update):', req.files);
     try {
         const project = await Project.findById(req.params.id);
         if (!project) {
@@ -76,19 +81,20 @@ router.post('/update/:id', upload.single('photo'), async (req, res) => {
         }
 
         // If a new photo is uploaded, delete the old one from Cloudinary and update
-        if (req.file) {
+        if (req.files && req.files.photo && req.files.photo[0]) {
             if (project.photoPublicId) {
                 await cloudinary.uploader.destroy(project.photoPublicId);
             }
-            project.photo = req.file.path;
-            project.photoPublicId = req.file.filename;
+            project.photo = req.files.photo[0].path;
+            project.photoPublicId = req.files.photo[0].filename;
         }
 
         // Update other project fields
-        const { title, description, projectUrl, tags } = req.body;
+        const { title, description, projectUrl, githubUrl, tags } = req.body;
         project.title = title || project.title;
         project.description = description || project.description;
-        project.projectUrl = projectUrl || project.projectUrl;
+        project.projectUrl = typeof projectUrl !== 'undefined' ? projectUrl : project.projectUrl;
+        project.githubUrl = typeof githubUrl !== 'undefined' ? githubUrl : project.githubUrl;
         if (tags) {
             project.tags = tags.split(',').map(tag => tag.trim());
         }
