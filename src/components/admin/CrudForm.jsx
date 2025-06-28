@@ -52,7 +52,7 @@ const CrudForm = ({ section, item, onSuccess, onCancel }) => {
     setLoading(true);
     setMessage('');
     try {
-      let res;
+
       const formData = new FormData();
       
       // Handle form data based on section
@@ -87,7 +87,7 @@ const CrudForm = ({ section, item, onSuccess, onCancel }) => {
         if (section === 'projects') {
           await api.post(`/api/projects/update/${item._id}`, formData);
         } else if (section === 'testimonials') {
-          res = await api.post(`/api/testimonials/update-with-photo/${item._id}`, formData);
+          await api.post(`/api/testimonials/update-with-photo/${item._id}`, formData);
         } else if (section === 'internships') {
           await api.post(`/api/internships/update-with-photo/${item._id}`, formData);
         }
