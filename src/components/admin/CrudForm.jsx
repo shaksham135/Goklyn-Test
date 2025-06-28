@@ -85,7 +85,7 @@ const CrudForm = ({ section, item, onSuccess, onCancel }) => {
       if (item && item._id) {
         // Update
         if (section === 'projects') {
-          res = await api.post(`/api/projects/update/${item._id}`, formData);
+          await api.post(`/api/projects/update/${item._id}`, formData);
         } else if (section === 'testimonials') {
           res = await api.post(`/api/testimonials/update-with-photo/${item._id}`, formData);
         } else if (section === 'internships') {
@@ -96,9 +96,9 @@ const CrudForm = ({ section, item, onSuccess, onCancel }) => {
         if (section === 'projects') {
           await api.post(`/api/${section}`, formData);
         } else if (section === 'testimonials') {
-          res = await api.post('/api/testimonials/add', formData);
+          await api.post('/api/testimonials/add', formData);
         } else if (section === 'internships') {
-          res = await api.post('/api/internships/add', formData);
+          await api.post('/api/internships/add', formData);
         }
       }
       setMessage('Saved successfully!');
